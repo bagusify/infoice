@@ -1,11 +1,40 @@
- {
-    issueDate: "14 April 2026",
-    client: { name: "Mitra Flow" },
-    project: "Sifatih Core",
-    baseItems: [
-        { id: "core", description: "Main Application Architecture", details: "System delivery, API integration, and database migration.", rate: 3900000, qty: 1 }
+{
+    "issueDate": "14 April 2026",
+    "client": { "name": "Mitra Flow" },
+    "project": "Sifatih Core",
+    "baseItems": [
+        { 
+            "id": "core", 
+            "desc": { "en": "Main Application Architecture", "id": "Arsitektur Aplikasi Utama" }, 
+            "details": { "en": "System delivery, API integration, and database migration.", "id": "Pengiriman sistem, integrasi API, dan migrasi database." }, 
+            "rate": 3900000, 
+            "qty": 1 
+        }
     ],
-    addOns: {
-        domain: { id: "dom", description: "Domain Registration (.com)", details: "Year 1 Promo (Renews at Rp 215k/yr)", rate: 121900, qty: 1 }
-    }
+    "addOns": {
+        "domain": { 
+            "id": "dom", 
+            "desc": { "en": "Domain Registration (.com)", "id": "Registrasi Domain (.com)" }, 
+            "details": { "en": "Year 1 Promo (Renews at Rp 215k/yr)", "id": "Promo Tahun 1 (Perpanjangan Rp 215rb/thn)" }, 
+            "rate": 121900, 
+            "qty": 1 
+        }
+    },
+    "supportTiers": [
+        { "id": "none", "monthly": 0, "yearly": 0 },
+        { 
+            "id": "starter", 
+            "name": "Starter Support", 
+            "details": { "en": "Email support, 48h SLA", "id": "Dukungan Email, SLA 48 jam" }, 
+            "monthly": 135000, 
+            "yearly": 1200000 
+        },
+        { 
+            "id": "premium", 
+            "name": "Premium Tier 1", 
+            "details": { "en": "WhatsApp Priority, 24h SLA", "id": "Prioritas WhatsApp, SLA 24 jam" }, 
+            "monthly": 200000, 
+            "yearly": 1500000 
+        }
+    ]
 }
