@@ -1,0 +1,175 @@
+ :root {
+            /* bagusify Brand Palette */
+            --bg-color: #0f172a; /* Deep tech slate */
+            --receipt-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent-cobalt: #2563eb; /* Electric Cobalt */
+            --accent-teal: #0d9488;   /* Deep Teal */
+            --dash-color: #cbd5e1;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Inter', sans-serif; /* Clean, modern sans-serif */
+            color: var(--text-main);
+            padding: 50px 16px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        /* The Receipt Paper */
+        .receipt-wrapper { 
+            max-width: 420px; 
+            width: 100%; 
+            margin: 0 auto; 
+            filter: drop-shadow(0 20px 25px rgba(0,0,0,0.5)); 
+        }
+        
+        .receipt { 
+            background-color: var(--receipt-bg); 
+            padding: 48px 32px; 
+            position: relative; 
+            border-radius: 4px;
+        }
+
+        /* Header & Branding */
+        .brand-name { 
+            font-size: 2.2rem; 
+            font-weight: 800; 
+            letter-spacing: -0.05em; 
+            margin-bottom: 4px;
+            /* High-tech Cobalt to Teal Gradient */
+            background: linear-gradient(135deg, var(--accent-cobalt), var(--accent-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .receipt-title { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            letter-spacing: 0.2em; 
+            color: var(--text-muted); 
+            font-weight: 600;
+        }
+
+        .divider { 
+            border-top: 2px dashed var(--dash-color); 
+            margin: 24px 0; 
+        }
+        
+        /* Monospace Numbers for Tech Aesthetic */
+        .mono-num { 
+            font-family: 'JetBrains Mono', monospace; 
+            font-weight: 700; 
+            letter-spacing: -0.03em;
+        }
+
+        /* Meta Data (Client Info) */
+        .meta-data { font-size: 0.85rem; line-height: 1.8; color: var(--text-muted); }
+        .client-badge {
+            display: inline-block;
+            background-color: #f1f5f9;
+            color: var(--text-main);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* Items List */
+        .item-row { margin-bottom: 20px; }
+        .item-desc { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main); }
+        .item-details { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; }
+        .item-calc { font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+
+        /* Interactive Simulator Panel */
+        .simulator-panel {
+            background-color: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+        .sim-title { 
+            font-size: 0.75rem; 
+            text-transform: uppercase; 
+            font-weight: 800; 
+            color: var(--accent-teal); 
+            margin-bottom: 16px; 
+            letter-spacing: 0.1em; 
+        }
+        
+        .form-check-label { font-size: 0.85rem; font-weight: 500; cursor: pointer; color: var(--text-main); }
+        .form-check-input { cursor: pointer; }
+        .form-check-input:checked { background-color: var(--accent-teal); border-color: var(--accent-teal); }
+        
+        .payment-options { display: flex; flex-direction: column; gap: 10px; }
+        .pay-opt-card {
+            border: 1px solid var(--dash-color); 
+            border-radius: 8px; 
+            padding: 12px 16px;
+            display: flex; 
+            align-items: center; 
+            gap: 12px; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+            background: #ffffff;
+        }
+        .pay-opt-card:hover { border-color: var(--accent-cobalt); transform: translateY(-1px); }
+        .pay-opt-card.active { 
+            border-color: var(--accent-cobalt); 
+            background-color: #eff6ff; 
+            box-shadow: 0 0 0 1px var(--accent-cobalt);
+        }
+        .pay-opt-card input { margin: 0; }
+
+        /* Totals */
+        .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.95rem; }
+        .grand-total {
+            font-size: 1.15rem; 
+            font-weight: 800; 
+            color: var(--text-main);
+            margin-top: 16px; 
+            padding-top: 16px; 
+            border-top: 2px solid var(--text-main);
+        }
+        
+        /* The Due Now Focus Block */
+        .highlight-box {
+            background: linear-gradient(135deg, var(--accent-cobalt), #1d4ed8);
+            color: white;
+            padding: 16px; 
+            border-radius: 8px; 
+            margin-top: 24px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        .highlight-box .mono-num { font-size: 1.4rem; color: white; }
+        .highlight-label { font-size: 0.85rem; font-weight: 600; opacity: 0.9; letter-spacing: 0.05em; }
+        
+        /* Action Button */
+        .btn-pay { 
+            background-color: var(--accent-teal); 
+            color: white; 
+            padding: 16px; 
+            font-weight: 600; 
+            font-size: 1rem;
+            border-radius: 12px; 
+            border: none; 
+            width: 100%; 
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); 
+            margin-top: 32px;
+        }
+        .btn-pay:active { transform: scale(0.98); }
+        .btn-pay:hover { 
+            background-color: #0f766e; 
+            color: white; 
+            box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.4);
+            transform: translateY(-2px);
+        }
