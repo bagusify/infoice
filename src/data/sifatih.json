@@ -1,0 +1,11 @@
+ {
+    issueDate: "14 April 2026",
+    client: { name: "Mitra Flow" },
+    project: "Sifatih Core",
+    baseItems: [
+        { id: "core", description: "Main Application Architecture", details: "System delivery, API integration, and database migration.", rate: 3900000, qty: 1 }
+    ],
+    addOns: {
+        domain: { id: "dom", description: "Domain Registration (.com)", details: "Year 1 Promo (Renews at Rp 215k/yr)", rate: 121900, qty: 1 }
+    }
+}
