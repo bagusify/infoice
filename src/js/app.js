@@ -110,7 +110,7 @@ const initApp = async () => {
 
     try {
         // 2. Fetch the corresponding JSON file (e.g., sifatih.json)
-        const response = await fetch(`${refId}.json`);
+        const response = await fetch(`src/data/${refId}.json`);
         
         if (!response.ok) throw new Error(`Project Reference '${refId}' not found.`);
         
