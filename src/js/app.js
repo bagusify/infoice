@@ -121,7 +121,7 @@ const initApp = async () => {
 
     if (!refId) {
         // Handle no ref parameter (e.g., show an error message or load a demo fallback)
-        els.itemsContainer.innerHTML = `<div class="alert alert-warning">No Project Reference provided in URL. e.g. ?ref=sifatih</div>`;
+        els.itemsContainer.innerHTML = `<div class="alert alert-warning">No Project Reference</div>`;
         return;
     }
 
