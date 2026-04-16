@@ -21,34 +21,38 @@
         }
     },
     "supportTiers": [
-        { "id": "none", "monthly": 0, "yearly": 0 },
+        { "id": "none", "priceMonthly": 0, "priceYearly": 0, "setupFee": 0 },
         { 
             "id": "tier0", 
             "name": "Sandboxing", 
             "details": { "en": "Pilot Project Phase & Testing", "id": "Fase Pilot Project & Uji Coba" }, 
-            "monthly": 85000, 
-            "yearly":  1020000
+            "priceMonthly": 0, 
+            "priceYearly": 0,
+            "setupFee": 0
         },
         { 
             "id": "tier1", 
             "name": "Starter", 
             "details": { "en": "Small Teams / UMKM (Max 10 Staff)", "id": "Tim Kecil (Maks 10 Staf)" }, 
-            "monthly": 199000, 
-            "yearly": 1990000 
+            "priceMonthly": 199000, 
+            "priceYearly": 1990000,
+            "setupFee": 2500000
         },
         { 
             "id": "tier2", 
             "name": "Growth", 
             "details": { "en": "Growing Business (Max 50 Staff)", "id": "Bisnis Berkembang (Maks 50 Staf)" }, 
-            "monthly": 799000, 
-            "yearly": 7990000 
+            "priceMonthly": 799000, 
+            "priceYearly": 7990000,
+            "setupFee": 5000000
         },
         { 
             "id": "tier3", 
             "name": "Enterprise", 
             "details": { "en": "Corporation / Regional ISP", "id": "Korporasi / ISP Regional" }, 
-            "monthly": 5000000, 
-            "yearly": 50000000 
+            "priceMonthly": 5000000, 
+            "priceYearly": 50000000,
+            "setupFee": 15000000
         }
     ]
 }

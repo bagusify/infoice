@@ -79,10 +79,7 @@ const i18n = {
 let masterData = {};
 const state = { lang: 'en', includeDomain: false, paymentMode: 'full', supportTier: 'none', supportCycle: 'yearly' };
 
-const els = {
-    itemsContainer: document.getElementById('ui-items'), subtotal: document.getElementById('ui-subtotal'), total: document.getElementById('ui-total'), dueSub: document.getElementById('ui-due-sub'), dueAmount: document.getElementById('ui-due-amount'), chkDomain: document.getElementById('ctrl-domain'), radModes: document.getElementsByName('pay_mode'), selSupport: document.getElementById('ctrl-support-tier'), radCycles: document.getElementsByName('support_cycle'), cycleWrapper: document.getElementById('support-cycle-wrapper'), compUI: document.getElementById('comparison-ui')
-};
-
+let els = {};
 const setLanguage = (lang) => {
     state.lang = lang;
     document.getElementById('btn-lang-en').classList.toggle('active', lang === 'en');
@@ -92,7 +89,7 @@ const setLanguage = (lang) => {
         const key = el.getAttribute('data-i18n');
         if (i18n[lang][key]) {
             if(el.tagName === 'OPTION') el.text = i18n[lang][key];
-            else el.innerHTML = i18n[lang][key];
+            else el.textContent = i18n[lang][key];
         }
     });
 
@@ -136,10 +133,10 @@ const renderInvoice = () => {
             els.compUI.classList.add('visible');
             const twelveMonthsCost = selectedSupport.monthly * 12;
             const savings = twelveMonthsCost - selectedSupport.yearly;
-            document.getElementById('comp-save-amt').textContent = `${i18n[state.lang].saveText} ${formatIDR(savings)}`;
-            document.getElementById('comp-mo-rate').textContent = formatIDR(selectedSupport.monthly);
-            document.getElementById('comp-mo-total').textContent = formatIDR(twelveMonthsCost);
-            document.getElementById('comp-yr-total').textContent = formatIDR(selectedSupport.yearly);
+            els.compSaveAmt.textContent = `${i18n[state.lang].saveText} ${formatIDR(savings)}`;
+            els.compMoRate.textContent = formatIDR(selectedSupport.monthly);
+            els.compMoTotal.textContent = formatIDR(twelveMonthsCost);
+            els.compYrTotal.textContent = formatIDR(selectedSupport.yearly);
         } else els.compUI.classList.remove('visible');
     } else {
         els.cycleWrapper.style.display = 'none';
@@ -163,14 +160,14 @@ const renderInvoice = () => {
     els.total.textContent = formatIDR(subtotal);
 
     if (state.paymentMode === 'full') {
-        els.dueSub.innerHTML = i18n[state.lang].settlement100;
+        els.dueSub.textContent = i18n[state.lang].settlement100;
         els.dueAmount.textContent = formatIDR(subtotal);
     } else if (state.paymentMode === 'dp') {
-        els.dueSub.innerHTML = i18n[state.lang].downPayment50;
-        els.dueAmount.textContent = formatIDR(subtotal / 2);
+        els.dueSub.textContent = i18n[state.lang].downPayment50;
+        els.dueAmount.textContent = formatIDR(Math.round(subtotal / 2));
     } else if (state.paymentMode === 'cicilan') {
-        els.dueSub.innerHTML = i18n[state.lang].month1of3;
-        els.dueAmount.textContent = formatIDR(subtotal / 3);
+        els.dueSub.textContent = i18n[state.lang].month1of3;
+        els.dueAmount.textContent = formatIDR(Math.round(subtotal / 3));
     }
 
     document.querySelectorAll('input[name="pay_mode"], input[name="support_cycle"]').forEach(radio => {
@@ -180,19 +177,27 @@ const renderInvoice = () => {
 
 // --- NEW: INITIALIZATION AND DATA FETCHING ---
 const initApp = async () => {
+    // Cache DOM Elements safely after DOM is loaded
+    els = {
+        itemsContainer: document.getElementById('ui-items'), subtotal: document.getElementById('ui-subtotal'), total: document.getElementById('ui-total'), dueSub: document.getElementById('ui-due-sub'), dueAmount: document.getElementById('ui-due-amount'), chkDomain: document.getElementById('ctrl-domain'), radModes: document.getElementsByName('pay_mode'), selSupport: document.getElementById('ctrl-support-tier'), radCycles: document.getElementsByName('support_cycle'), cycleWrapper: document.getElementById('support-cycle-wrapper'), compUI: document.getElementById('comparison-ui'), compSaveAmt: document.getElementById('comp-save-amt'), compMoRate: document.getElementById('comp-mo-rate'), compMoTotal: document.getElementById('comp-mo-total'), compYrTotal: document.getElementById('comp-yr-total')
+    };
+
     // Set initial language
     setLanguage('en');
 
     // 1. Parse URL Parameters
     const urlParams = new URLSearchParams(window.location.search);
-    const refId = urlParams.get('ref');
+    const rawRefId = urlParams.get('ref');
     const tierParam = urlParams.get('tier');
 
-    if (!refId) {
+    if (!rawRefId) {
         // Handle no ref parameter (e.g., show an error message or load a demo fallback)
         els.itemsContainer.innerHTML = `<div class="alert alert-warning">No Project Reference</div>`;
         return;
     }
+
+    // Sanitize path parameter to prevent path traversal
+    const refId = rawRefId.replace(/[^a-zA-Z0-9_\-]/g, '');
 
     try {
         // 2. Fetch the corresponding JSON file (e.g., sifatih.json)
