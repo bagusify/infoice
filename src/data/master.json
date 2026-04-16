@@ -1,13 +1,13 @@
 {
-    "issueDate": "14 April 2026",
-    "client": { "name": "Mitra Flow" },
-    "project": "Sifatih Core",
+    "issueDate": "16 April 2026",
+    "client": { "name": "Mitraflow" },
+    "project": "SiFatih / Mitraflow CRM & Operations",
     "baseItems": [
         { 
-            "id": "core", 
-            "desc": { "en": "Main Application Architecture", "id": "Arsitektur Aplikasi Utama" }, 
-            "details": { "en": "System delivery, API integration, and database migration.", "id": "Pengiriman sistem, integrasi API, dan migrasi database." }, 
-            "rate": 3900000, 
+            "id": "setup", 
+            "desc": { "en": "Initial Setup & Development Fee", "id": "Biaya Setup & Pengembangan Awal" }, 
+            "details": { "en": "Core coding, Work Order engine, Bonus calculation logic, initial data migration.", "id": "Struktur koding dasar, modul Work Order, logika perhitungan Bonus, migrasi data awal." }, 
+            "rate": 3500000, 
             "qty": 1 
         }
     ],
@@ -16,7 +16,7 @@
             "id": "dom", 
             "desc": { "en": "Domain Registration (.com)", "id": "Registrasi Domain (.com)" }, 
             "details": { "en": "Year 1 Promo (Renews at Rp 215k/yr)", "id": "Promo Tahun 1 (Perpanjangan Rp 215rb/thn)" }, 
-            "rate": 121900, 
+            "rate": 215000, 
             "qty": 1 
         }
     },
@@ -32,21 +32,21 @@
         { 
             "id": "tier1", 
             "name": "Starter", 
-            "details": { "en": "Small Teams / UMKM (Max 10 Staff)", "id": "Tim Kecil(Maks 10 Staf)" }, 
+            "details": { "en": "Small Teams / UMKM (Max 10 Staff)", "id": "Tim Kecil (Maks 10 Staf)" }, 
             "monthly": 199000, 
             "yearly": 1990000 
         },
         { 
             "id": "tier2", 
-            "name": "Medium", 
-            "details": { "en": "Growing Business (Max 50 Staff)", "id": "Bisnis (Maks 50 Staf)" }, 
+            "name": "Growth", 
+            "details": { "en": "Growing Business (Max 50 Staff)", "id": "Bisnis Berkembang (Maks 50 Staf)" }, 
             "monthly": 799000, 
             "yearly": 7990000 
         },
         { 
             "id": "tier3", 
             "name": "Enterprise", 
-            "details": { "en": "Corporation", "id": "Skala Korporasi" }, 
+            "details": { "en": "Corporation / Regional ISP", "id": "Korporasi / ISP Regional" }, 
             "monthly": 5000000, 
             "yearly": 50000000 
         }

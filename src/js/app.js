@@ -2,8 +2,8 @@ const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', c
 
 // --- I18N DICTIONARY ---
 const i18n = {
-    en: { pageTitle: "Project Proposal & Payment Simulator", addonsTitle: "Project Add-ons", includeDomain: "Include Domain (.com) Registration", domainSub: "First year promo rate applied.", termsTitle: "App Payment Terms", payFull: "Full Payment (1x)", payDp: "Down Payment (50%)", payInstallment: "Installments (3x)", supportTitle: "Maintenance & Support", supportOptNone: "No Active Support (Pay-per-incident)", supportOptStarter: "Starter Support (Email, 48h SLA)", supportOptPremium: "Premium Tier 1 (WhatsApp, 24h SLA)", billedYearly: "Billed Yearly (Discounted)", billedMonthly: "Billed Monthly", saveText: "Save", yearlySavings: "Yearly Savings Info", monthsAt: "12 Months @", yearlyUpfront: "Yearly Upfront =", btnGenerate: "Generate Invoice Link & Send via WhatsApp", receiptTitle: "Official Estimate", dateIssued: "Date Issued:", billedTo: "Billed To:", projectRef: "Project Ref:", subtotal: "Subtotal", total: "TOTAL", dueNow: "DUE NOW", settlement100: "100% Settlement", downPayment50: "50% Down Payment", month1of3: "Month 1 of 3", thankYou: "Thank you for building with bagusify.", supportNote: "*Premium Support Tier 1 applies after month 6." },
-    id: { pageTitle: "Proposal Proyek & Simulator Pembayaran", addonsTitle: "Tambahan Proyek", includeDomain: "Termasuk Registrasi Domain (.com)", domainSub: "Berlaku tarif promo tahun pertama.", termsTitle: "Termin Pembayaran Aplikasi", payFull: "Pelunasan Penuh (1x)", payDp: "Uang Muka / DP (50%)", payInstallment: "Cicilan (3x)", supportTitle: "Pemeliharaan & Dukungan", supportOptNone: "Tanpa Dukungan Aktif (Bayar per insiden)", supportOptStarter: "Dukungan Starter (Email, SLA 48 jam)", supportOptPremium: "Premium Tier 1 (WhatsApp, SLA 24 jam)", billedYearly: "Tagihan Tahunan (Diskon)", billedMonthly: "Tagihan Bulanan", saveText: "Hemat", yearlySavings: "Info Hemat Tahunan", monthsAt: "12 Bulan @", yearlyUpfront: "Bayar di Muka =", btnGenerate: "Buat Link Invoice & Kirim via WhatsApp", receiptTitle: "Estimasi Resmi", dateIssued: "Tanggal Rilis:", billedTo: "Ditagihkan Ke:", projectRef: "Ref Proyek:", subtotal: "Subtotal", total: "TOTAL", dueNow: "JATUH TEMPO", settlement100: "Pelunasan 100%", downPayment50: "Uang Muka 50%", month1of3: "Bulan 1 dari 3", thankYou: "Terima kasih telah membangun bersama bagusify.", supportNote: "*Dukungan Premium Tier 1 berlaku setelah bulan ke-6." }
+    en: { pageTitle: "Project Proposal & Payment Simulator", addonsTitle: "Project Add-ons", includeDomain: "Include Domain (.com) Registration", domainSub: "First year promo rate applied.", termsTitle: "App Payment Terms", payFull: "Full Payment (1x)", payDp: "Down Payment (50%)", payInstallment: "Installments (3x)", supportTitle: "Service Category", supportOptNone: "Custom / No Category", supportOptTier0: "Tier 0: Sandboxing (Testing/Dev)", supportOptTier1: "Tier 1: Starter (Pro Business)", supportOptTier2: "Tier 2: Medium (Growing Scale)", supportOptTier3: "Tier 3: Enterprise (Corporate Scale)", billedYearly: "Billed Yearly (Discounted)", billedMonthly: "Billed Monthly", saveText: "Save", yearlySavings: "Yearly Savings Info", monthsAt: "12 Months @", yearlyUpfront: "Yearly Upfront =", btnGenerate: "Generate Invoice Link & Send via WhatsApp", receiptTitle: "Official Estimate", dateIssued: "Date Issued:", billedTo: "Billed To:", projectRef: "Project Ref:", subtotal: "Subtotal", total: "TOTAL", dueNow: "DUE NOW", settlement100: "100% Settlement", downPayment50: "50% Down Payment", month1of3: "Month 1 of 3", thankYou: "Thank you for building with bagusify.", supportNote: "*Selected category affects monthly/yearly licensing." },
+    id: { pageTitle: "Proposal Proyek & Simulator Pembayaran", addonsTitle: "Tambahan Proyek", includeDomain: "Termasuk Registrasi Domain (.com)", domainSub: "Berlaku tarif promo tahun pertama.", termsTitle: "Termin Pembayaran Aplikasi", payFull: "Pelunasan Penuh (1x)", payDp: "Uang Muka / DP (50%)", payInstallment: "Cicilan (3x)", supportTitle: "Kategori Layanan", supportOptNone: "Kustom / Tanpa Kategori", supportOptTier0: "Tier 0: Sandboxing (Uji Coba/Dev)", supportOptTier1: "Tier 1: Starter (Bisnis Profesional)", supportOptTier2: "Tier 2: Medium (Skala Berkembang)", supportOptTier3: "Tier 3: Enterprise (Skala Korporasi)", billedYearly: "Tagihan Tahunan (Diskon)", billedMonthly: "Tagihan Bulanan", saveText: "Hemat", yearlySavings: "Info Hemat Tahunan", monthsAt: "12 Bulan @", yearlyUpfront: "Bayar di Muka =", btnGenerate: "Buat Link Invoice & Kirim via WhatsApp", receiptTitle: "Estimasi Resmi", dateIssued: "Tanggal Rilis:", billedTo: "Ditagihkan Ke:", projectRef: "Ref Proyek:", subtotal: "Subtotal", total: "TOTAL", dueNow: "JATUH TEMPO", settlement100: "Pelunasan 100%", downPayment50: "Uang Muka 50%", month1of3: "Bulan 1 dari 3", thankYou: "Terima kasih telah membangun bersama bagusify.", supportNote: "*Kategori yang dipilih mempengaruhi lisensi bulanan/tahunan." }
 };
 
 // Initialize empty global variable for the dynamically loaded data
@@ -26,6 +26,22 @@ const setLanguage = (lang) => {
             else el.innerHTML = i18n[lang][key];
         }
     });
+
+    if (masterData && masterData.supportTiers) {
+        els.selSupport.innerHTML = '';
+        masterData.supportTiers.forEach(tier => {
+            const opt = document.createElement('option');
+            opt.value = tier.id;
+            if (tier.id === 'none') {
+                opt.text = i18n[lang].supportOptNone;
+            } else {
+                opt.text = `Tier ${tier.id.replace('tier', '')}: ${tier.name} - ${tier.details[lang]}`;
+            }
+            if (state.supportTier === tier.id) opt.selected = true;
+            els.selSupport.appendChild(opt);
+        });
+    }
+
     if (Object.keys(masterData).length > 0) renderInvoice();
 };
 
@@ -116,10 +132,11 @@ const initApp = async () => {
         
         masterData = await response.json();
 
-        // 3. Populate Header Data
+        // 3. Populate Header Data and Update Lang Option
         document.getElementById('ui-date').textContent = masterData.issueDate;
         document.getElementById('ui-client').textContent = masterData.client.name;
         document.getElementById('ui-project').textContent = masterData.project;
+        setLanguage(state.lang);
 
         // 4. Attach Listeners
         els.chkDomain.addEventListener('change', (e) => { state.includeDomain = e.target.checked; renderInvoice(); });
