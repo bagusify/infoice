@@ -26,8 +26,8 @@
             "id": "tier0", 
             "name": "Sandboxing", 
             "details": { "en": "Pilot Project Phase & Testing", "id": "Fase Pilot Project & Uji Coba" }, 
-            "monthly": 0, 
-            "yearly": 0 
+            "monthly": 85000, 
+            "yearly":  1020000
         },
         { 
             "id": "tier1", 

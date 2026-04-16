@@ -23,13 +23,6 @@
     "supportTiers": [
         { "id": "none", "monthly": 0, "yearly": 0 },
         { 
-            "id": "tier0", 
-            "name": "Sandboxing", 
-            "details": { "en": "Pilot Project Phase & Testing", "id": "Fase Pilot Project & Uji Coba" }, 
-            "monthly": 0, 
-            "yearly": 0 
-        },
-        { 
             "id": "tier1", 
             "name": "Starter", 
             "details": { "en": "Small Teams / UMKM (Max 10 Staff)", "id": "Tim Kecil(Maks 10 Staf)" }, 
@@ -50,5 +43,6 @@
             "monthly": 5000000, 
             "yearly": 50000000 
         }
+        
     ]
 }
