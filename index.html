@@ -48,6 +48,7 @@
                         
                         <select id="ctrl-support-tier" class="support-select form-select mb-3">
                             <option value="none" data-i18n="supportOptNone">Custom / No Category</option>
+                            <option value="tier0" data-i18n="supportOptTier0">Tier 0: Sandboxing (Testing/Dev)</option>
                             <option value="tier1" data-i18n="supportOptTier1">Tier 1: Starter (Pro Business)</option>
                             <option value="tier2" data-i18n="supportOptTier2">Tier 2: Medium (Growing Scale)</option>
                             <option value="tier3" data-i18n="supportOptTier3">Tier 3: Enterprise (Corporate Scale)</option>
@@ -75,6 +76,11 @@
                                     <div class="text-white mt-1"><span data-i18n="yearlyUpfront">Yearly Upfront =</span> <span id="comp-yr-total" class="fw-bold"></span></div>
                                 </div>
                             </div>
+
+                            <div id="ui-setup-badge" class="setup-waived-badge" style="display: none;">
+                                <i class="bi bi-check-circle-fill"></i>
+                                <span data-i18n="setupWaived">Setup fee waived with yearly plan</span>
+                            </div>
                         </div>
                     </div>
 
@@ -96,10 +102,10 @@
                         </div>
                     </div>
 
-                    <button class="btn-pay d-flex justify-content-center gap-3 align-items-center shadow-lg">
+                    <!-- <button class="btn-pay d-flex justify-content-center gap-3 align-items-center shadow-lg">
                         <span data-i18n="btnGenerate">Generate Invoice Link & Send via WhatsApp</span>
                         <i class="bi bi-send-fill"></i>
-                    </button>
+                    </button> -->
                 </div>
             </div>
 
@@ -127,6 +133,17 @@
                         <div class="divider"></div>
 
                         <div id="ui-items"></div>
+
+                        <div id="ui-setup-row" class="setup-fee-row" style="display: none;">
+                            <div class="setup-fee-info">
+                                <i class="bi bi-tools"></i>
+                                <div>
+                                    <span class="setup-fee-label">Implementation Fee (1x)</span>
+                                    <span class="setup-fee-note">One-time charge on first invoice</span>
+                                </div>
+                            </div>
+                            <span class="setup-fee-amount mono-num"></span>
+                        </div>
 
                         <div class="divider"></div>
 

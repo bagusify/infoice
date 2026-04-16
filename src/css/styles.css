@@ -1,6 +1,6 @@
- :root {
-    var(--bg-color): #0f172a; 
-    --panel-bg: #1e293b; 
+:root {
+    --bg-color: #0f172a;
+    --panel-bg: #1e293b;
     --receipt-bg: #ffffff;
     --text-main: #0f172a;
     --text-light: #f8fafc;
@@ -8,10 +8,11 @@
     --text-muted-light: #94a3b8;
     --accent-cobalt: #2563eb;
     --accent-teal: #0d9488;
+    --accent-amber: #d97706;
     --dash-color: #cbd5e1;
 }
 
-body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: var(--text-light); padding: 40px 0; min-height: 100vh; }
+body { background-color: var(--bg-color); font-family: 'Inter', sans-serif; color: var(--text-light); padding: 40px 0; min-height: 100vh; }
 
 /* Language Switcher */
 .lang-switch { display: inline-flex; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 4px; }
@@ -20,7 +21,7 @@ body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: var(-
 
 /* Left Column */
 .simulator-container { background-color: var(--panel-bg); border-radius: 24px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); height: 100%; position: relative; }
-.brand-name { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent-cobalt), var(--accent-teal)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.brand-name { font-size: 2.5rem; font-weight: 800; letter-spacing: -0.05em; margin-bottom: 8px; background: linear-gradient(135deg, var(--accent-cobalt), var(--accent-teal)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 .page-subtitle { color: var(--text-muted-light); font-size: 1.1rem; margin-bottom: 40px; }
 
 .control-group { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; padding: 24px; margin-bottom: 24px; }
@@ -45,6 +46,23 @@ body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: var(-
 .comparison-box.visible { display: block; }
 .comparison-math { font-family: 'JetBrains Mono', monospace; font-size: 0.9rem; color: #5eead4; }
 
+/* Setup Waived Badge (left panel) */
+.setup-waived-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(16, 185, 129, 0.12);
+    border: 1px solid rgba(16, 185, 129, 0.3);
+    color: #34d399;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    margin-top: 12px;
+    animation: fadeSlideIn 0.3s ease-out;
+}
+.setup-waived-badge i { font-size: 1rem; }
+
 .btn-pay { background-color: var(--accent-teal); color: white; padding: 18px; font-weight: 600; font-size: 1.1rem; border-radius: 12px; border: none; width: 100%; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); margin-top: 24px; }
 .btn-pay:active { transform: scale(0.98); }
 .btn-pay:hover { background-color: #0f766e; color: white; box-shadow: 0 10px 15px -3px rgba(13, 148, 136, 0.4); transform: translateY(-2px); }
@@ -56,7 +74,7 @@ body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: var(-
 .receipt::before { top: -8px; background-image: linear-gradient(-135deg, var(--receipt-bg) 4px, transparent 0), linear-gradient(135deg, var(--receipt-bg) 4px, transparent 0); }
 .receipt::after { bottom: -8px; background-image: linear-gradient(-45deg, var(--receipt-bg) 4px, transparent 0), linear-gradient(45deg, var(--receipt-bg) 4px, transparent 0); }
 
-.receipt-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); font-weight: 800; text-align: center; margin-bottom: 24px;}
+.receipt-title { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.2em; color: var(--text-muted); font-weight: 800; text-align: center; margin-bottom: 24px; }
 .divider { border-top: 2px dashed var(--dash-color); margin: 24px 0; }
 .mono-num { font-family: 'JetBrains Mono', monospace; font-weight: 700; letter-spacing: -0.03em; }
 
@@ -67,6 +85,49 @@ body { background-color: #0f172a; font-family: 'Inter', sans-serif; color: var(-
 .item-desc { font-weight: 600; font-size: 0.95rem; margin-bottom: 4px; color: var(--text-main); }
 .item-details { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 8px; line-height: 1.5; }
 .item-calc { font-size: 0.85rem; display: flex; justify-content: space-between; align-items: center; }
+
+/* Setup Fee Row (Receipt) */
+.setup-fee-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border: 1px solid #fcd34d;
+    border-radius: 8px;
+    padding: 14px 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    animation: fadeSlideIn 0.3s ease-out;
+}
+.setup-fee-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.setup-fee-info i {
+    font-size: 1.1rem;
+    color: var(--accent-amber);
+}
+.setup-fee-info div { display: flex; flex-direction: column; }
+.setup-fee-label {
+    font-weight: 700;
+    font-size: 0.82rem;
+    color: #92400e;
+}
+.setup-fee-note {
+    font-size: 0.7rem;
+    color: #b45309;
+    opacity: 0.8;
+}
+.setup-fee-amount {
+    color: #92400e;
+    font-size: 0.9rem;
+}
+
+@keyframes fadeSlideIn {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+}
 
 .total-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 0.95rem; }
 .grand-total { font-size: 1.15rem; font-weight: 800; color: var(--text-main); margin-top: 16px; padding-top: 16px; border-top: 2px solid var(--text-main); }
