@@ -1,3 +1,72 @@
+/**
+ * Core Pricing Logic Engine
+ * Handles SaaS base pricing + conditional 1st-month setup fees
+ */
+function calculatePricing(tier, cycle, monthIndex = 1) {
+    let totalDue = 0;
+    let lineItems = [];
+
+    if (cycle === "monthly") {
+        // Always add the base monthly subscription
+        lineItems.push({ name: "Biaya Bulanan", amount: tier.priceMonthly });
+        totalDue += tier.priceMonthly;
+
+        // Apply Setup Fee ONLY if it is Month 1
+        if (monthIndex === 1 && tier.setupFee) {
+            lineItems.push({ name: "Setup (1x Bayar)", amount: tier.setupFee });
+            totalDue += tier.setupFee;
+        }
+    } 
+    else if (cycle === "yearly") {
+        // Yearly plan (waives the setup fee)
+        lineItems.push({ name: "Biaya Tahunan", amount: tier.priceYearly });
+        totalDue += tier.priceYearly;
+    }
+
+    return {
+        totalDue: totalDue,
+        breakdown: lineItems,
+        renewalPrice: cycle === "monthly" ? tier.priceMonthly : tier.priceYearly
+    };
+}
+
+// Example function that triggers when the user toggles Monthly/Yearly or selects a plan
+function updatePricingUI(tierData, cycleSelector) {
+    // 1. Run the calculation for checkout (Month 1)
+    const pricing = calculatePricing(tierData, cycleSelector, 1);
+    
+    // 2. Select your DOM elements (Ensure these IDs/classes match your index.html)
+    const priceDisplay = document.querySelector('.price-display');
+    const setupBadge = document.querySelector('.setup-badge-container');
+    const breakdownList = document.querySelector('.invoice-breakdown');
+
+    // 3. Update the main price prominent display
+    priceDisplay.textContent = formatIDR(pricing.totalDue);
+
+    // 4. UX: Handle the Setup Fee Badge visibility to prevent sticker shock
+    if (cycleSelector === 'monthly' && tierData.setupFee) {
+        // Show the "+ Setup (1x Bayar)" badge explicitly
+        setupBadge.innerHTML = `<span class="badge bg-soft-warning text-dark mt-2">
+            + Setup (1x Bayar) ${formatIDR(tierData.setupFee)} di Bulan 1
+        </span>`;
+        setupBadge.style.display = 'block';
+    } else {
+        // Hide badge for yearly or renewals
+        setupBadge.style.display = 'none';
+        setupBadge.innerHTML = '';
+    }
+
+    // 5. Render the Line Items for the invoice/checkout table
+    if (breakdownList) {
+        breakdownList.innerHTML = pricing.breakdown.map(item => `
+            <div class="d-flex justify-content-between border-bottom py-2">
+                <span class="text-muted">${item.name}</span>
+                <span class="fw-bold">${formatIDR(item.amount)}</span>
+            </div>
+        `).join('');
+    }
+}
+
 const formatIDR = (num) => new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(num);
 
 // --- I18N DICTIONARY ---
@@ -145,14 +214,45 @@ const initApp = async () => {
 
         setLanguage(state.lang);
 
-        // 4. Attach Listeners
-        els.chkDomain.addEventListener('change', (e) => { state.includeDomain = e.target.checked; renderInvoice(); });
-        els.selSupport.addEventListener('change', (e) => { state.supportTier = e.target.value; renderInvoice(); });
-        els.radModes.forEach(radio => radio.addEventListener('change', (e) => { state.paymentMode = e.target.value; renderInvoice(); }));
-        els.radCycles.forEach(radio => radio.addEventListener('change', (e) => { state.supportCycle = e.target.value; renderInvoice(); }));
+        // --- NEW PRICING INTEGRATION ---
+        // Helper to grab the active tier object and run our new pricing engine
+        const syncPricing = () => {
+            // Find the full tier object from JSON based on user's selected dropdown state
+            const currentTierData = masterData.supportTiers.find(t => t.id === state.supportTier);
+            
+            // Safety check
+            if(!currentTierData) return;
 
-        // 5. Render Initial State
+            // Trigger the DOM update using the state's cycle ('monthly' or 'yearly')
+            updatePricingUI(currentTierData, state.supportCycle);
+        };
+
+        // 4. Attach Listeners (Notice we call BOTH renderInvoice() and syncPricing())
+        els.chkDomain.addEventListener('change', (e) => { 
+            state.includeDomain = e.target.checked; 
+            renderInvoice(); 
+        });
+        
+        els.selSupport.addEventListener('change', (e) => { 
+            state.supportTier = e.target.value; 
+            renderInvoice(); 
+            syncPricing(); // Re-calculate when tier changes (e.g., Basic to Pro)
+        });
+        
+        els.radModes.forEach(radio => radio.addEventListener('change', (e) => { 
+            state.paymentMode = e.target.value; 
+            renderInvoice(); 
+        }));
+        
+        els.radCycles.forEach(radio => radio.addEventListener('change', (e) => { 
+            state.supportCycle = e.target.value; 
+            renderInvoice(); 
+            syncPricing(); // Re-calculate when cycle toggles (Monthly/Yearly)
+        }));
+
+        // 5. Render Initial State (Month 1 on Load)
         renderInvoice();
+        syncPricing(); // <--- CALL IT HERE on initial page load!
 
     } catch (error) {
         console.error("Error loading project data:", error);
