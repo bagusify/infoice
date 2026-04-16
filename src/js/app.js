@@ -117,6 +117,7 @@ const initApp = async () => {
     // 1. Parse URL Parameters
     const urlParams = new URLSearchParams(window.location.search);
     const refId = urlParams.get('ref');
+    const tierParam = urlParams.get('tier');
 
     if (!refId) {
         // Handle no ref parameter (e.g., show an error message or load a demo fallback)
@@ -136,6 +137,12 @@ const initApp = async () => {
         document.getElementById('ui-date').textContent = masterData.issueDate;
         document.getElementById('ui-client').textContent = masterData.client.name;
         document.getElementById('ui-project').textContent = masterData.project;
+
+        if (tierParam && masterData.supportTiers.some(t => t.id === tierParam)) {
+            state.supportTier = tierParam;
+            els.selSupport.style.display = 'none';
+        }
+
         setLanguage(state.lang);
 
         // 4. Attach Listeners
